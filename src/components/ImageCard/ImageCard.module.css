@@ -1,0 +1,13 @@
+.img {
+    width: calc(25vw - 40px); 
+    height: calc(33vh - 80px);
+    object-fit: cover;
+    cursor: zoom-in;
+    transition: transform 0.2s ease-in-out;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.img:hover {
+    transform: scale(1.02);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+}
