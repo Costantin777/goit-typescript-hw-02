@@ -26,7 +26,7 @@ export async function fetchData({
 }: FetchDataArgs): Promise<void> {
   try {
     setLoading(true);
-    const response = await axios.get(`https://api.unsplash.com/search/photos/`, {
+    const response = await axios.get('https://api.unsplash.com/search/photos/', {
       params: {
         client_id: 'sSw2A24lCtgMKKWaGbVZZ3GjpqcpzhpoZDxANpcbn30',
         query: query,
@@ -36,11 +36,11 @@ export async function fetchData({
       },
     });
     setPhotos((prevPhotos) => [...prevPhotos, ...response.data.results]);
-  } catch (error: unknown) {
+  } catch (error) {
     if (error instanceof Error) {
       setError(error.message);
     } else {
-      setError("An unknown error occurred");
+      setError('An unknown error occurred');
     }
   } finally {
     setLoading(false);
