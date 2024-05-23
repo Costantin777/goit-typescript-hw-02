@@ -28,7 +28,7 @@ export async function fetchData({
   setError,
 }: FetchDataArgs): Promise<void> {
   try {
-    setLoading(true);
+    setLoading(true); /// Отримання даних з сервера ///
     const response = await axios.get(
       "https://api.unsplash.com/search/photos/",
       {
@@ -41,8 +41,9 @@ export async function fetchData({
         },
       }
     );
-    setPhotos((prevPhotos) => [...prevPhotos, ...response.data.results]);
+    setPhotos((prevPhotos) => [...prevPhotos, ...response.data.results]); /// Оновлення стану фотографій ///
   } catch (error) {
+    /// Обробка помилок ///
     if (error instanceof Error) {
       setError(error.message);
     } else {
