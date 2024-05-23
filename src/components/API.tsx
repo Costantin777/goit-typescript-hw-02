@@ -1,20 +1,23 @@
-import axios from 'axios';
+import axios from "axios";
 
 type Photo = {
-  id: string;
+  ///окремий об’єкт фотографії///
+  id: string; ///Унікальний ідентифікатор фотографії///
   urls: {
-    regular: string;
-    small: string;
+    ///Об’єкт, що містить URL для різних розмірів зображення (наприклад, regular та small)///
+    regular: string; ///Рядок, що представляє URL зображення звичайного розміру.///
+    small: string; ///Рядок, що представляє URL зображення малого розміру.///
   };
-  alt_description: string;
+  alt_description: string; ///Рядок, що представляє альтернативний опис фотографії (якщо він доступний)///
 };
 
 type FetchDataArgs = {
-  query: string;
-  page: number;
-  setPhotos: React.Dispatch<React.SetStateAction<Photo[]>>; 
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
-  setError: React.Dispatch<React.SetStateAction<string>>;
+  ///представляє аргументи, які очікує функція fetchData///
+  query: string; /// Рядок, що представляє пошуковий запит для фотографій///
+  page: number; ///Число, що представляє номер сторінки (для пагінації результатів)///
+  setPhotos: React.Dispatch<React.SetStateAction<Photo[]>>; /// Функція, яка встановлює стан масиву об’єктів Photo///
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>; /// Функція, яка встановлює стан завантаження (зазвичай булеве значення) ///
+  setError: React.Dispatch<React.SetStateAction<string>>; /// Функція, яка встановлює повідомлення про помилку (зазвичай рядок) ///
 };
 
 export async function fetchData({
@@ -22,25 +25,28 @@ export async function fetchData({
   page,
   setPhotos,
   setLoading,
-  setError
+  setError,
 }: FetchDataArgs): Promise<void> {
   try {
     setLoading(true);
-    const response = await axios.get('https://api.unsplash.com/search/photos/', {
-      params: {
-        client_id: 'sSw2A24lCtgMKKWaGbVZZ3GjpqcpzhpoZDxANpcbn30',
-        query: query,
-        per_page: 12,
-        page: page,
-        orientation: 'landscape',
-      },
-    });
+    const response = await axios.get(
+      "https://api.unsplash.com/search/photos/",
+      {
+        params: {
+          client_id: "sSw2A24lCtgMKKWaGbVZZ3GjpqcpzhpoZDxANpcbn30",
+          query: query,
+          per_page: 12,
+          page: page,
+          orientation: "landscape",
+        },
+      }
+    );
     setPhotos((prevPhotos) => [...prevPhotos, ...response.data.results]);
   } catch (error) {
     if (error instanceof Error) {
       setError(error.message);
     } else {
-      setError('An unknown error occurred');
+      setError("An unknown error occurred");
     }
   } finally {
     setLoading(false);
