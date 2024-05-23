@@ -2,19 +2,19 @@ import axios, { AxiosResponse } from "axios";
 
 // Визначте інтерфейс для об'єкта фотографії Unsplash
 interface UnsplashPhoto {
-  id: string;
+  id: string; // Унікальний ідентифікатор фотографії
   urls: {
-    regular: string;
-    small: string;
+    regular: string; // URL зображення звичайного розміру
+    small: string; // URL зображення малого розміру
   };
-  alt_description: string;
+  alt_description: string; // Альтернативний опис фотографії (якщо він доступний)
 }
 
 // Визначте інтерфейс для всієї відповіді API Unsplash
 interface UnsplashResponse {
-  results: UnsplashPhoto[];
-  total: number;
-  total_pages: number;
+  results: UnsplashPhoto[]; // Масив об'єктів фотографій
+  total: number; // Загальна кількість результатів
+  total_pages: number; // Загальна кількість сторінок результатів (для пагінації)
 }
 
 export async function fetchData({
