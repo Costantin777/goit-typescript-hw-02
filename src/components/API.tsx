@@ -49,9 +49,10 @@ export async function fetchData({
         },
       }
     );
-
     // Оновіть стан з отриманими фотографіями
-    setPhotos((prevPhotos) => [...prevPhotos, ...response.data.results]);
+    setPhotos((prevPhotos: UnsplashPhoto[]) => {
+      return [...prevPhotos, ...response.data.results];
+    });
   } catch (error) {
     // Обробка помилок
     if (error instanceof Error) {
