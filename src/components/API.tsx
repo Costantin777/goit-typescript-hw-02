@@ -2,19 +2,19 @@ import axios, { AxiosResponse } from "axios";
 
 // Визначте інтерфейс для об'єкта фотографії Unsplash
 interface UnsplashPhoto {
-  id: string; // Унікальний ідентифікатор фотографії
+  id: string;
   urls: {
-    regular: string; // URL зображення звичайного розміру
-    small: string; // URL зображення малого розміру
+    regular: string;
+    small: string;
   };
-  alt_description: string; // Альтернативний опис фотографії (якщо він доступний)
+  alt_description: string;
 }
 
 // Визначте інтерфейс для всієї відповіді API Unsplash
 interface UnsplashResponse {
-  results: UnsplashPhoto[]; // Масив об'єктів фотографій
-  total: number; // Загальна кількість результатів
-  total_pages: number; // Загальна кількість сторінок результатів (для пагінації)
+  results: UnsplashPhoto[];
+  total: number;
+  total_pages: number;
 }
 
 // Визначте інтерфейс для параметрів fetchData
@@ -36,7 +36,6 @@ export async function fetchData({
   try {
     setLoading(true);
 
-    // Зробіть запит до API
     const response: AxiosResponse<UnsplashResponse> = await axios.get(
       "https://api.unsplash.com/search/photos/",
       {
@@ -49,12 +48,15 @@ export async function fetchData({
         },
       }
     );
-    // Оновіть стан з отриманими фотографіями
+
+    if (response.status >= 400) {
+      throw new Error("Помилка сервера");
+    }
+
     setPhotos((prevPhotos: UnsplashPhoto[]) => {
       return [...prevPhotos, ...response.data.results];
     });
   } catch (error) {
-    // Обробка помилок
     if (error instanceof Error) {
       setError(error.message);
     } else {
