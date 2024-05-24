@@ -17,6 +17,15 @@ interface UnsplashResponse {
   total_pages: number; // Загальна кількість сторінок результатів (для пагінації)
 }
 
+// Визначте інтерфейс для параметрів fetchData
+interface FetchDataArgs {
+  query: string;
+  page: number;
+  setPhotos: (photos: UnsplashPhoto[]) => void;
+  setLoading: (loading: boolean) => void;
+  setError: (error: string) => void;
+}
+
 export async function fetchData({
   query,
   page,
