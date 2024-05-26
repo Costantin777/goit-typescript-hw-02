@@ -1,5 +1,8 @@
 import axios, { AxiosResponse } from "axios";
 
+// URL API Unsplash
+const UNSPLASH_API_URL = "https://api.unsplash.com/search/photos/";
+
 // Визначте інтерфейс для об'єкта фотографії Unsplash
 interface UnsplashPhoto {
   id: string;
@@ -37,13 +40,13 @@ export async function fetchData({
     setLoading(true);
 
     const response: AxiosResponse<UnsplashResponse> = await axios.get(
-      "https://api.unsplash.com/search/photos/",
+      UNSPLASH_API_URL,
       {
         params: {
           client_id: "sSw2A24lCtgMKKWaGbVZZ3GjpqcpzhpoZDxANpcbn30",
-          query: query,
+          query,
           per_page: 12,
-          page: page,
+          page,
           orientation: "landscape",
         },
       }
