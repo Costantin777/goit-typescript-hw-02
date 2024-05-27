@@ -39,9 +39,8 @@ export async function fetchData({
   try {
     setLoading(true);
 
-    const response: AxiosResponse<UnsplashResponse> = await axios.get(
-      UNSPLASH_API_URL,
-      {
+    const response: AxiosResponse<UnsplashResponse> =
+      await axios.get<UnsplashResponse>(UNSPLASH_API_URL, {
         params: {
           client_id: "sSw2A24lCtgMKKWaGbVZZ3GjpqcpzhpoZDxANpcbn30",
           query,
@@ -49,14 +48,13 @@ export async function fetchData({
           page,
           orientation: "landscape",
         },
-      }
-    );
+      });
 
     if (response.status >= 400) {
       throw new Error("Помилка сервера");
     }
 
-    setPhotos((prevPhotos: UnsplashPhoto[]) => {
+    setPhotos((prevPhotos: UnsplashPhoto[]): UnsplashPhoto[] => {
       return [...prevPhotos, ...response.data.results];
     });
   } catch (error) {
