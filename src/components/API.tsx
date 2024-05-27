@@ -54,9 +54,10 @@ export async function fetchData({
       throw new Error("Помилка сервера");
     }
 
-    setPhotos((prevPhotos: UnsplashPhoto[]): UnsplashPhoto[] => {
-      return [...prevPhotos, ...response.data.results];
-    });
+    setPhotos((prevPhotos: UnsplashPhoto[]): UnsplashPhoto[] => [
+      ...prevPhotos,
+      ...response.data.results,
+    ]);
   } catch (error) {
     if (error instanceof Error) {
       setError(error.message);
