@@ -1,33 +1,24 @@
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 
-// URL API Unsplash
-const UNSPLASH_API_URL = "https://api.unsplash.com/search/photos/";
-
-// Визначте інтерфейс для об'єкта фотографії Unsplash
-interface UnsplashPhoto {
-  id: string;
+type Photo = {
+  ///окремий об’єкт фотографії///
+  id: string; ///Унікальний ідентифікатор фотографії///
   urls: {
-    regular: string;
-    small: string;
+    ///Об’єкт, що містить URL для різних розмірів зображення (наприклад, regular та small)///
+    regular: string; ///Рядок, що представляє URL зображення звичайного розміру.///
+    small: string; ///Рядок, що представляє URL зображення малого розміру.///
   };
-  alt_description: string;
-}
+  alt_description: string; ///Рядок, що представляє альтернативний опис фотографії (якщо він доступний)///
+};
 
-// Визначте інтерфейс для всієї відповіді API Unsplash
-interface UnsplashResponse {
-  results: UnsplashPhoto[];
-  total: number;
-  total_pages: number;
-}
-
-// Визначте інтерфейс для параметрів fetchData
-interface FetchDataArgs {
-  query: string;
-  page: number;
-  setPhotos: (photos: UnsplashPhoto[]) => void;
-  setLoading: (loading: boolean) => void;
-  setError: (error: string) => void;
-}
+type FetchDataArgs = {
+  ///представляє аргументи, які очікує функція fetchData///
+  query: string; /// Рядок, що представляє пошуковий запит для фотографій///
+  page: number; ///Число, що представляє номер сторінки (для пагінації результатів)///
+  setPhotos: React.Dispatch<React.SetStateAction<Photo[]>>; /// Функція, яка встановлює стан масиву об’єктів Photo///
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>; /// Функція, яка встановлює стан завантаження (зазвичай булеве значення) ///
+  setError: React.Dispatch<React.SetStateAction<string>>; /// Функція, яка встановлює повідомлення про помилку (зазвичай рядок) ///
+};
 
 export async function fetchData({
   query,
@@ -37,32 +28,26 @@ export async function fetchData({
   setError,
 }: FetchDataArgs): Promise<void> {
   try {
-    setLoading(true);
-
-    const response: AxiosResponse<UnsplashResponse> =
-      await axios.get<UnsplashResponse>(UNSPLASH_API_URL, {
+    setLoading(true); /// Отримання даних з сервера ///
+    const response = await axios.get(
+      "https://api.unsplash.com/search/photos/",
+      {
         params: {
           client_id: "sSw2A24lCtgMKKWaGbVZZ3GjpqcpzhpoZDxANpcbn30",
-          query,
+          query: query,
           per_page: 12,
-          page,
+          page: page,
           orientation: "landscape",
         },
-      });
-
-    if (response.status >= 400) {
-      throw new Error("Помилка сервера");
-    }
-
-    setPhotos((prevPhotos: UnsplashPhoto[]): UnsplashPhoto[] => [
-      ...prevPhotos,
-      ...response.data.results,
-    ]);
+      }
+    );
+    setPhotos((prevPhotos) => [...prevPhotos, ...response.data.results]); /// Оновлення стану фотографій ///
   } catch (error) {
+    /// Обробка помилок ///
     if (error instanceof Error) {
       setError(error.message);
     } else {
-      setError("Сталася невідома помилка");
+      setError("An unknown error occurred");
     }
   } finally {
     setLoading(false);
