@@ -1,24 +1,27 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 type Photo = {
-  ///окремий об’єкт фотографії///
-  id: string; ///Унікальний ідентифікатор фотографії///
+  id: string;
   urls: {
-    ///Об’єкт, що містить URL для різних розмірів зображення (наприклад, regular та small)///
-    regular: string; ///Рядок, що представляє URL зображення звичайного розміру.///
-    small: string; ///Рядок, що представляє URL зображення малого розміру.///
+    regular: string;
+    small: string;
   };
-  alt_description: string; ///Рядок, що представляє альтернативний опис фотографії (якщо він доступний)///
+  alt_description: string;
 };
 
 type FetchDataArgs = {
-  ///представляє аргументи, які очікує функція fetchData///
-  query: string; /// Рядок, що представляє пошуковий запит для фотографій///
-  page: number; ///Число, що представляє номер сторінки (для пагінації результатів)///
-  setPhotos: React.Dispatch<React.SetStateAction<Photo[]>>; /// Функція, яка встановлює стан масиву об’єктів Photo///
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>; /// Функція, яка встановлює стан завантаження (зазвичай булеве значення) ///
-  setError: React.Dispatch<React.SetStateAction<string>>; /// Функція, яка встановлює повідомлення про помилку (зазвичай рядок) ///
+  query: string;
+  page: number;
+  setPhotos: React.Dispatch<React.SetStateAction<Photo[]>>;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  setError: React.Dispatch<React.SetStateAction<string>>;
 };
+
+interface UnsplashResponse {
+  results: Photo[];
+  total: number;
+  total_pages: number;
+}
 
 export async function fetchData({
   query,
@@ -28,8 +31,8 @@ export async function fetchData({
   setError,
 }: FetchDataArgs): Promise<void> {
   try {
-    setLoading(true); /// Отримання даних з сервера ///
-    const response = await axios.get(
+    setLoading(true);
+    const response: AxiosResponse<UnsplashResponse> = await axios.get(
       "https://api.unsplash.com/search/photos/",
       {
         params: {
@@ -41,9 +44,8 @@ export async function fetchData({
         },
       }
     );
-    setPhotos((prevPhotos) => [...prevPhotos, ...response.data.results]); /// Оновлення стану фотографій ///
+    setPhotos((prevPhotos) => [...prevPhotos, ...response.data.results]);
   } catch (error) {
-    /// Обробка помилок ///
     if (error instanceof Error) {
       setError(error.message);
     } else {
