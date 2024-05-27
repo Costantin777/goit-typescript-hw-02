@@ -4,7 +4,7 @@ import css from "./LoadMoreBtn.module.css";
 
 const LoadMoreBtn = ({ loadMore }) => (
   <button id="loadMore" onClick={loadMore} className={css.btn} type="button">
-    Load More
+    Завантажити ще
   </button>
 );
 
