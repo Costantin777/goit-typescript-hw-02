@@ -1,0 +1,46 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  body {
+    font-family: sans-serif;
+    line-height: 1.5;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p {
+    margin: 0;
+  }
+
+  ul,
+  ol {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+  }
+
+}
+
+main {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+input {
+  display: block;
+}
+
+label {
+  font-size: 20px;
+}

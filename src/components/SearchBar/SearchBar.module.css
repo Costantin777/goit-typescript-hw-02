@@ -1,0 +1,40 @@
+.header {
+    background-color: #6CB2EB;
+    padding: 5px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+
+
+.fieldWrapper {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border-radius: 25px;
+    padding: 5px;
+}
+
+.button {
+border: none;
+border-radius: 25px;
+background-color: #6CB2EB;
+   color:black;
+   height:40px
+}
+
+.input {
+    border: none;
+    flex: 1;
+    padding: 5px 10px;
+    width: 180px;
+    outline: none;
+}
+
+.searchIcon {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
