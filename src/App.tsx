@@ -4,19 +4,24 @@ import fetchPhotos from "./fetchPhotos"; // Assuming you have this function impl
 import ImageGallery from "./components/ImageGallery/ImageGallery";
 import ImageModal from "./components/ImageModal/ImageModal";
 import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
-import ErrorMessage from "./ErrorMassage/ErrorMessage"; // Corrected import path
+import ErrorMessage from "./components/ErrorMessage/ErrorMessage"; // Corrected import path
 import Loader from "./components/Loader/Loader";
 
 import "./App.css";
 
+interface Photo {
+  id: number;
+  // Add other properties relevant to your Photo type
+}
+
 const App: React.FC = () => {
   const [page, setPage] = useState<number>(1);
   const [query, setQuery] = useState<string>("");
-  const [photos, setPhotos] = useState<Photo[]>([]); // Assuming Photo type exists
+  const [photos, setPhotos] = useState<Photo[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
-  const [modalData, setModalData] = useState<Photo | null>(null); // Assuming Photo type
+  const [modalData, setModalData] = useState<Photo | null>(null);
 
   useEffect(() => {
     async function searchPictures() {
