@@ -4,7 +4,7 @@ import fetchPhotos from "./fetchPhotos"; // Assuming you have this function impl
 import ImageGallery from "./components/ImageGallery/ImageGallery";
 import ImageModal from "./components/ImageModal/ImageModal";
 import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
-import ErrorMessage from "./components/ErrorMessage/ErrorMessage"; // Corrected import path
+import ErrorMessage from "./ErrorMassage/ErrorMessage"; // Corrected import path
 import Loader from "./components/Loader/Loader";
 
 import "./App.css";
